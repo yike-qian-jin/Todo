@@ -1,0 +1,19 @@
+GET http://localhost:3001/   
+ 
+###
+   
+POST http://localhost:3001/new
+Content-Type: application/json 
+
+{
+    "text" : "c"
+}
+
+###
+DELETE http://localhost:3001/delete/656b3f381c70da52146f92f4
+
+###
+DELETE http://localhost:3001/deleteAll/
+
+###
+PUT  http://localhost:3001/complete/656b3f321c70da52146f92f0
