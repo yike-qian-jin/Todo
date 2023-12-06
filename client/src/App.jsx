@@ -1,5 +1,8 @@
 import "./App.css";
 import { useState, useEffect, useRef } from "react";
+import Login from "./components/Login";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "./features/userSlice";
 const BASE_API = "http://localhost:3001";
 
 function App() {
@@ -8,6 +11,8 @@ function App() {
   const [newTodo, setNewTodo] = useState("");
   const popupRef = useRef(null);
   const inputRef = useRef(null);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getTodos();
@@ -86,9 +91,17 @@ function App() {
     setTodos([]);
   };
 
+  if (user === null) {
+    return <Login />;
+  }
   return (
     <div className="app">
-      <h1>Welcome</h1>
+      <nav>
+        <h1>Welcome</h1>
+        <button className="logout" onClick={() => dispatch(logout())}>
+          Log Out
+        </button>
+      </nav>
       <div className="nav">
         <h4>Your Tasks</h4>
         <button className="filter__button" onClick={hideCompleted}>

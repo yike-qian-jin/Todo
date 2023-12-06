@@ -23,10 +23,25 @@ body {
   padding: 32px;
 }
 
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.logout {
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+}
+
 h1 {
   font-size: 40px;
   font-weight: 700;
-  margin-bottom: 32px;
 }
 
 .nav {

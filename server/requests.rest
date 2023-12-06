@@ -13,7 +13,22 @@ Content-Type: application/json
 DELETE http://localhost:3001/delete/656b3f381c70da52146f92f4
 
 ###
-DELETE http://localhost:3001/deleteAll/
+PUT  http://localhost:3001/complete/656b3f321c70da52146f92f0
 
 ###
-PUT  http://localhost:3001/complete/656b3f321c70da52146f92f0
+POST http://localhost:3001/newUser
+Content-Type: application/json 
+
+{
+    "email" : "jawadkoko147@gmail.com",
+    "password" : "123456" 
+}
+
+###
+POST http://localhost:3001/user
+Content-Type: application/json 
+
+{
+    "email" : "ahmedyoussef_17@hotmail.fr",
+    "password" : "123456" 
+}

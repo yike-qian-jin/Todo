@@ -3,6 +3,8 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Todo = require("./models/Todo");
+const Users = require("./models/Users");
+const bcrypt = require('bcrypt');
 require("dotenv").config();
 
 app.use(express.json());
@@ -61,6 +63,35 @@ app.put("/complete/:id", async (req, res) => {
         todo.complete = !todo.complete;
         todo.save();
         res.json(todo)
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+app.post("/newUser", async (req, res) => {
+    const email = req.body.email;
+    const passwordHashed = await bcrypt.hash(req.body.password, 10)
+    try {
+        const newUser = new Users({ email, password: passwordHashed })
+        const savedUser = await newUser.save();
+        res.status(201).json(savedUser);
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+app.post("/user", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await Users.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: "invalid credentials" })
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: "invalid credentials" })
+        }
+        return res.status(200).json({ message: "Authentication successful", user });
     } catch (error) {
         console.error(error)
     }
