@@ -1,12 +1,13 @@
 GET http://localhost:3001/   
  
-###
+### 
    
 POST http://localhost:3001/new
 Content-Type: application/json 
 
 {
-    "text" : "c"
+    "text" : "cacs",
+    "userEmail" : "ahmed@gmail.com"
 }
 
 ###

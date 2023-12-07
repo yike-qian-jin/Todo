@@ -73,6 +73,7 @@ function App() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         text: newTodo,
+        userEmail: user.email,
       }),
     }).then((res) => res.json());
     setTodos([...todos, data]);
@@ -115,20 +116,22 @@ function App() {
         </button>
       </div>
       <div className="todos__container">
-        {todos.map((todo) => (
-          <div className="todos" key={todo._id}>
-            <div
-              className={`todo ${todo.complete ? "is-complete" : ""}`}
-              onClick={() => completeTodo(todo._id)}
-            >
-              <div className="checkbox"></div>
-              <div className="text">{todo.text}</div>
+        {todos
+          .filter((todo) => todo.userEmail === user.email)
+          .map((todo) => (
+            <div className="todos" key={todo._id}>
+              <div
+                className={`todo ${todo.complete ? "is-complete" : ""}`}
+                onClick={() => completeTodo(todo._id)}
+              >
+                <div className="checkbox"></div>
+                <div className="text">{todo.text}</div>
+              </div>
+              <div className="delete-todo" onClick={() => deleteTodo(todo._id)}>
+                X
+              </div>
             </div>
-            <div className="delete-todo" onClick={() => deleteTodo(todo._id)}>
-              X
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
       <div className="addPopup" onClick={handleAddPopupClick}>
         +

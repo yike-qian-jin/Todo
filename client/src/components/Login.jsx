@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { login } from "../features/userSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const BASE_API = "http://localhost:3001";
 
 function Login() {
@@ -27,10 +30,10 @@ function Login() {
           })
         );
       } else {
-        console.error("Failed to register user");
+        console.error("error");
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
     }
   };
 
@@ -52,7 +55,7 @@ function Login() {
           })
         );
       } else {
-        console.error("Failed to register user");
+        toast.error(response.statusText);
       }
     } catch (error) {
       console.error(error);

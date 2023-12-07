@@ -10,11 +10,13 @@ const TodoSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    userEmail: {
+        type: String
+    },
     timestamp: {
         type: Date,
         default: Date.now(),
     },
-    user_id: String,
 })
 
 const Todo = mongoose.model("Todo", TodoSchema);

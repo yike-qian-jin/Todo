@@ -5,6 +5,7 @@ const cors = require("cors");
 const Todo = require("./models/Todo");
 const Users = require("./models/Users");
 const bcrypt = require('bcrypt');
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 require("dotenv").config();
 
 app.use(express.json());
@@ -22,6 +23,7 @@ mongoose.connect(process.env.db_URI)
 
 
 app.get("/", async (req, res) => {
+
     const todos = await Todo.find();
     res.json(todos)
 })
@@ -30,8 +32,9 @@ app.post("/new", async (req, res) => {
     try {
         const todo = await new Todo({
             text: req.body.text,
+            userEmail: req.body.userEmail,
         })
-        todo.save();
+        await todo.save();
         res.json(todo)
     } catch (error) {
         console.error(error)
@@ -96,3 +99,5 @@ app.post("/user", async (req, res) => {
         console.error(error)
     }
 })
+
+app.use(notFound, errorHandler)
