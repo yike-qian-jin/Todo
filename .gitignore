@@ -23,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 appcopy.jsx
+servercopy.js
+.env
