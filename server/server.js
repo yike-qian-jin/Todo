@@ -73,13 +73,18 @@ app.put("/complete/:id", async (req, res) => {
 
 app.post("/newUser", async (req, res) => {
     const email = req.body.email;
-    const passwordHashed = await bcrypt.hash(req.body.password, 10)
     try {
+        const existingEmail = await Users.findOne({ email });
+        if (existingEmail) {
+            return res.status(400).json({ error: "User already exists" });
+        }
+        const passwordHashed = await bcrypt.hash(req.body.password, 10)
         const newUser = new Users({ email, password: passwordHashed })
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
     } catch (error) {
-        console.error(error)
+        console.error(error);
+        return res.status(500).json({ error: "Server error" });
     }
 })
 

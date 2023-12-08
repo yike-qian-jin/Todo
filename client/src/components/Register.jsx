@@ -12,33 +12,6 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const logInUser = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(BASE_API + "/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      if (response.ok) {
-        await response.json();
-        dispatch(
-          login({
-            email: email,
-          })
-        );
-        toast.success("Authentication Success");
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const registerNewUser = async (e) => {
     e.preventDefault();
     try {
@@ -67,8 +40,8 @@ function Login() {
   };
 
   return (
-    <LoginContainer>
-      <form onSubmit={logInUser}>
+    <RegisterContainer>
+      <form onSubmit={registerNewUser}>
         <InputsContainer>
           <label htmlFor="email">Enter Your Email</label>
           <input
@@ -88,21 +61,21 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Log In</button>
+          <button type="submit">Sign up</button>
           <p>
-            Don&apos;t have an account ?{" "}
-            <a onClick={registerNewUser}>Sign Up</a>
+            Already have an account ? <a>Sign In</a>
           </p>
+          <p>register</p>
         </InputsContainer>
       </form>
-    </LoginContainer>
+    </RegisterContainer>
   );
 }
 
 export default Login;
 
-const LoginContainer = styled.div`
-  margin: 200px auto;
+const RegisterContainer = styled.div`
+  margin: 150px auto;
   border-radius: 5px;
   background-color: var(--dark);
   max-width: 500px;
